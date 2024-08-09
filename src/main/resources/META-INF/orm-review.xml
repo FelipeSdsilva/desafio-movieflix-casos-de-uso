@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings
+        xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_3_0.xsd"
+        version="1.0">
+    
+    <named-query name="listAllReviewsPerMovieId">
+        <query>
+            <![CDATA[
+                SELECT new com.devsuperior.movieflix.dto.ReviewDTO(
+                    review.id,
+                    review.text,
+                    movie.id,
+                    user.id,
+                    user.name,
+                    user.email)
+                FROM
+                    Review review
+                LEFT JOIN review.movie movie
+                LEFT JOIN review.user user
+                WHERE
+                    (:movieId IS NULL OR movie.id = :movieId)
+            ]]>
+        </query>
+    </named-query>
+</entity-mappings>
